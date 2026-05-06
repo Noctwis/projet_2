@@ -21,34 +21,6 @@ def main() :
 
 
 
-    @st.cache(allow_output_mutation=True)
-    def load_knn(sample):
-        knn = knn_training(sample)
-        return knn
-
-
-
-    def identite_client(data, id):
-        data_client = data[data.index == int(id)]
-        return data_client
-
-
-
-    @st.cache
-    def load_kmeans(sample, id, mdl):
-        index = sample[sample.index == int(id)].index.values
-        index = index[0]
-        data_client = pd.DataFrame(sample.loc[sample.index, :])
-        df_neighbors = pd.DataFrame(knn.fit_predict(data_client), index=data_client.index)
-        df_neighbors = pd.concat([df_neighbors, data], axis=1)
-        return df_neighbors.iloc[:,1:].sample(10)
-
-    @st.cache
-    def knn_training(sample):
-        knn = KMeans(n_clusters=2).fit(sample)
-        return knn 
-
-
     #######################################
     # SIDEBAR
     #######################################
@@ -58,7 +30,7 @@ def main() :
     <div style="background-color: tomato; padding:10px; border-radius:10px">
     <h1 style="color: white; text-align:center">Trop bien ça marche !</h1>
     </div>
-    <p style="font-size: 20px; font-weight: bold; text-align:center">Credit decision support…</p>
+    <p style="font-size: 20px; font-weight: bold; text-align:center">c'est super bien !</p>
     """
     st.markdown(html_temp, unsafe_allow_html=True)
 
@@ -78,19 +50,7 @@ def main() :
     #######################################
     #Display Customer ID from Sidebar
     st.write("Selection du film :", chk_id)           
-    
-
-    #Similar customer files display
-    chk_voisins = st.checkbox("Show similar movies files ?")
-
-    if chk_voisins:
-        knn = load_knn(sample)
-        st.markdown("<u>List of the 10 movies closest to this movies :</u>", unsafe_allow_html=True)
-        st.dataframe(load_kmeans(sample, chk_id, knn))
-        #st.markdown("<i>Target 1 = Customer with default</i>", unsafe_allow_html=True)
-    else:
-        st.markdown("<i>…</i>", unsafe_allow_html=True)
-        
+            
     
      
     chk_voisins2 = st.checkbox("Show similar movies by KNN?")   
