@@ -20,12 +20,7 @@ def main() :
         return sample
 
 
-
-    #######################################
-    # SIDEBAR
-    #######################################
-
-    #Title display
+    #Titre
     html_temp = """
     <div style="background-color: tomato; padding:10px; border-radius:10px">
     <h1 style="color: white; text-align:center">Trop bien ça marche !</h1>
@@ -36,24 +31,19 @@ def main() :
 
     sample = load_data()
     title = sample.title
-    #Customer ID selection
     st.sidebar.header("**General Information**")
 
-    #Loading selectbox
+    #Ici on va créer une liste pour séléctionné notre film
     chk_id = st.sidebar.selectbox("Film selectionner", title)
  
     
-        
-
-    #######################################
-    # HOME PAGE - MAIN CONTENT
-    #######################################
-    #Display Customer ID from Sidebar
+       
+    #On va affiche le film qui a été selectionné
     st.write("Selection du film :", chk_id)           
             
     
      
-    chk_voisins2 = st.checkbox("Show similar movies by KNN?")   
+    chk_voisins2 = st.checkbox("Voir les films similaires?")   
     
     if chk_voisins2:
 
@@ -64,7 +54,6 @@ def main() :
         # Modèle KNN
         knn = NearestNeighbors(n_neighbors=10, metric='cosine')
         knn.fit(genre_matrix)
-
 
         # Index du film
         idx = sample[sample["title"] == chk_id].index[0]
