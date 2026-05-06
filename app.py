@@ -115,7 +115,7 @@ def main() :
         # Exclure le film lui-même
         recommendations = []
         for i in indices[0][1:]:
-            recommendations.append(df.iloc[i]["title"])
+            recommendations.append(sample.iloc[i]["title"])
 
         st.markdown(recommendations)
     else:
