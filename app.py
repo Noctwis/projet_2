@@ -62,7 +62,7 @@ def main() :
     """
     st.markdown(html_temp, unsafe_allow_html=True)
 
-
+    sample = load_data()
     title = sample.title
     #Customer ID selection
     st.sidebar.header("**General Information**")
