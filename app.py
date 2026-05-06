@@ -97,27 +97,27 @@ def main() :
     
     if chk_voisins2:
 
-    # Transformation des genres en vecteurs (one-hot encoding)
-    mlb = MultiLabelBinarizer()
-    genre_matrix = mlb.fit_transform(sample["genres"])
+        # Transformation des genres en vecteurs (one-hot encoding)
+        mlb = MultiLabelBinarizer()
+        genre_matrix = mlb.fit_transform(sample["genres"])
 
-    # Modèle KNN
-    knn = NearestNeighbors(n_neighbors=10, metric='cosine')
-    knn.fit(genre_matrix)
+        # Modèle KNN
+        knn = NearestNeighbors(n_neighbors=10, metric='cosine')
+        knn.fit(genre_matrix)
 
 
-    # Index du film
-    idx = sample[sample["title"] == chk_id].index[0]
+        # Index du film
+        idx = sample[sample["title"] == chk_id].index[0]
 
-    # Trouver les voisins
-    distances, indices = knn.kneighbors([genre_matrix[idx]], n_neighbors=10)
+        # Trouver les voisins
+        distances, indices = knn.kneighbors([genre_matrix[idx]], n_neighbors=10)
 
-    # Exclure le film lui-même
-    recommendations = []
-    for i in indices[0][1:]:
-        recommendations.append(df.iloc[i]["title"])
+        # Exclure le film lui-même
+        recommendations = []
+        for i in indices[0][1:]:
+            recommendations.append(df.iloc[i]["title"])
 
-    st.markdown(recommendations)
+        st.markdown(recommendations)
     else:
         st.markdown("<i>…</i>", unsafe_allow_html=True)
         
